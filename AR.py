@@ -7,10 +7,7 @@ Created on Tue Aug  6 15:39:41 2024
 import cv2
 import numpy as np
 
-def paste_image(f,g,x,y):
-    nr,nc=f.shape[:2]
-    g[x:x+nr,y:y+nc,:]=f[:,:,:]
-    
+#Perspective Transformation    
 def paste_polygon(f,g,polygon_x,polygon_y):
     nr1,nc1=f.shape[:2]
     nr2,nc2=g.shape[:2]
@@ -31,9 +28,9 @@ def paste_polygon(f,g,polygon_x,polygon_y):
     
 def AR_TV_show(f,g,ar_show=1):
     if ar_show==1:
-        x,y,height,width=222,275,158,260
-        temp=cv2.resize(f,[width,height],interpolation=cv2.INTER_LINEAR)
-        paste_image(temp, g, x,y)
+        pt_x=[220,377,380,220]
+        pt_y=[275,273,535,535]
+        paste_polygon(f, g, pt_x, pt_y)
     if ar_show==2:
         pt_x=[90,292,310,40]
         pt_y=[357,360,735,740]
@@ -54,10 +51,13 @@ if not cap.isOpened():
 
 if ar_show==1:
     background=cv2.imread(r"D:\video_processing\HW2\Background1.bmp",-1)
+
 elif ar_show==2:
     background=cv2.imread(r"D:\video_processing\HW2\Background2.bmp",-1)
+
 elif ar_show==3:
     background=cv2.imread(r"D:\video_processing\HW2\Background3.bmp",-1)
+
 else:
     print("請重新輸入1,2或3")
     ar_show=eval(input("請輸入AR_show(1,2,3):"))
@@ -80,3 +80,5 @@ while True:
 cap.release()
 out.release()
 cv2.destroyAllWindows()
+
+
